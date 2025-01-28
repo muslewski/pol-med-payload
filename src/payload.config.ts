@@ -18,6 +18,14 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    autoLogin:
+      process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
+        ? {
+            email: 'test@example.com',
+            password: 'test',
+            prefillOnly: true,
+          }
+        : false,
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
@@ -27,8 +35,8 @@ export default buildConfig({
     // Add your own logo and icon here
     components: {
       graphics: {
-        Icon: './components/admin/Icon/index.tsx#Icon',
-        Logo: './components/admin/Logo/index.tsx#Logo',
+        Icon: './components/admin/graphics/Icon/index.tsx#Icon',
+        Logo: './components/admin/graphics/Logo/index.tsx#Logo',
       },
     },
     // Add your own meta data here
@@ -52,7 +60,7 @@ export default buildConfig({
         ],
         title: 'This is a custom OG title',
       },
-      titleSuffix: '- Your App Name',
+      titleSuffix: '| Pol - Med App',
     },
   },
   collections: [Users, Media],
@@ -74,7 +82,7 @@ export default buildConfig({
   },
   email: resendAdapter({
     defaultFromAddress: 'dev@bdglab.com',
-    defaultFromName: 'Pol-Med App',
+    defaultFromName: 'Pol - Med App',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
 })
